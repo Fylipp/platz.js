@@ -1,0 +1,15 @@
+.placeholderjs-childless[data-placeholderjs-after]::after {
+    content: attr(data-placeholderjs-after);
+}
+
+.placeholderjs-childless[data-placeholderjs-before]::before {
+    content: attr(data-placeholderjs-before);
+}
+
+.placeholderjs-childless-with-placeholder {
+    display: none;
+}
+
+.placeholderjs-sleep {
+    display: none;
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Demonstration</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="placeholder.css">
+
+        <script src="placeholder.js"></script>
+
+        <script>
+            window.onload = function() {
+                placeholderjs_init();
+            }
+        </script>
+
+        <style>
+            ul {
+                border : 1px red solid;
+                padding: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <ul data-placeholderjs-after="Placeholder after">
+            <li>Hello</li>
+            <li>World</li>
+        </ul>
+
+        <ul data-placeholderjs-after="Placeholder after">
+            
+        </ul>
+
+        <ul data-placeholderjs-before="Placeholder before">
+            <li>Hello</li>
+            <li>World</li>
+        </ul>
+
+        <ul data-placeholderjs-before="Placeholder before">
+            
+        </ul>
+
+        <ul data-placeholderjs-placeholder-id="placeholder">
+            <li>Hello</li>
+            <li>World</li>
+        </ul>
+
+        <p id="placeholder">Placeholder replace</p>
+    </body>
+</html>
