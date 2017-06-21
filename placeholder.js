@@ -27,10 +27,10 @@ var __placeholderjs_observer = new MutationObserver(function(mutations, observer
 var __placeholderjs_observerConfig = { childList: true }
 
 function placeholderjs_init() {
-    document.querySelectorAll('*[data-placeholderjs-after], *[data-placeholderjs-before], *[data-placeholderjs-placeholder-id]').forEach(__placeholderjs_initListeners);
+    document.querySelectorAll('*[data-placeholderjs-after], *[data-placeholderjs-before], *[data-placeholderjs-placeholder-id]').forEach(placeholderjs_register);
 }
 
-function __placeholderjs_initListeners(element) {
+function placeholderjs_register(element) {
     __placeholderjs_observer.observe(element, __placeholderjs_observerConfig);
     __placeholderjs_hasChildrenBranch(element);
 }

@@ -1,53 +1,152 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Demonstration</title>
+<head>
+    <title>placeholder.js</title>
 
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="placeholder.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="placeholder.css">
 
-        <script src="placeholder.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="placeholder.js"></script>
 
-        <script>
-            window.onload = function() {
-                placeholderjs_init();
-            }
-        </script>
+    <script>
+        $(document).ready(function () {
+            placeholderjs_init();
+            hljs.initHighlightingOnLoad();
+        });
+    </script>
 
-        <style>
-            ul {
-                border : 1px red solid;
-                padding: 10px;
-            }
-        </style>
-    </head>
+    <style>
+        body {
+            background-color: #fafafa;
+        }
 
-    <body>
-        <ul data-placeholderjs-after="Placeholder after">
-            <li>Hello</li>
-            <li>World</li>
-        </ul>
+        .big-arrow {
+            font-size: 12em;
 
-        <ul data-placeholderjs-after="Placeholder after">
-            
-        </ul>
+            text-align: center;
+            display: block;
+        }
+    </style>
+</head>
 
-        <ul data-placeholderjs-before="Placeholder before">
-            <li>Hello</li>
-            <li>World</li>
-        </ul>
+<body>
+<div class="row z-depth-3 light-blue darken-3">
+    <div class="col s12 m8 offset-m2 l6 offset-l3">
+        <h1 class="white-text">placeholder.js</h1>
+    </div>
+</div>
 
-        <ul data-placeholderjs-before="Placeholder before">
-            
-        </ul>
+<div class="row">
+    <div class="col s12 m8 offset-m2 l6 offset-l3">
+        <h1>Placeholder at ::after / ::before</h1>
+        <p>
+            This is the simplest placeholder. It is displayed as text in the content of the <code>::after</code> or
+            <code>::before</code> element.
+        </p>
 
-        <ul data-placeholderjs-placeholder-id="placeholder">
-            <li>Hello</li>
-            <li>World</li>
-        </ul>
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Web Technologies</span>
+                <ul class="browser-default" data-placeholderjs-after="The list is empty">
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                </ul>
+            </div>
+        </div>
 
-        <p id="placeholder">Placeholder replace</p>
-    </body>
+        <i class="material-icons big-arrow">arrow_downward</i>
+
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Web Technologies</span>
+                <ul data-placeholderjs-after="The list is empty">
+
+                </ul>
+            </div>
+        </div>
+
+        <h4>Source</h4>
+        <p>Below <code>::after</code> is used. In order to have the placeholder in <code>::before</code> you simply
+            have to use <code>data-placeholderjs-before</code>.</p>
+        <pre><code class="html">&lt;ul data-placeholderjs-after=&quot;The list is empty&quot;&gt;
+    &lt;li&gt;HTML&lt;/li&gt;
+    &lt;li&gt;CSS&lt;/li&gt;
+    &lt;li&gt;JavaScript&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12 m8 offset-m2 l6 offset-l3">
+        <h1>Placeholder Element</h1>
+        <p>
+            Sometimes the placeholder should visually replace the list. Below you can see this feature
+            being used with <a href="http://materializecss.com/collections.html">MaterializeCSS colllections</a>.
+            Had the element not been replaced there would have been a border around the placeholder. Any HTML element
+            can be used as a placeholder this way.
+        </p>
+
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Important Links</span>
+                <div class="collection" data-placeholderjs-placeholder-id="demo_placeholder1">
+                    <a href="https://github.com/Fylipp/placeholder.js" class="collection-item">placeholder.js</a>
+                    <a href="https://github.com/Fylipp" class="collection-item">Fylipp</a>
+                    <a href="https://github.com/" class="collection-item">GitHub</a>
+                </div>
+
+                <p id="demo_placeholder1">Placeholder replace</p>
+            </div>
+        </div>
+
+        <i class="material-icons big-arrow">arrow_downward</i>
+
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Important Links</span>
+                <div class="collection" data-placeholderjs-placeholder-id="demo_placeholder2">
+
+                </div>
+
+                <p id="demo_placeholder2">There are no elements in this list</p>
+            </div>
+        </div>
+
+        <h4>Source</h4>
+        <pre><code class="html">&lt;div class=&quot;collection&quot; data-placeholderjs-placeholder-id=&quot;placeholder&quot;&gt;
+    &lt;a href=&quot;https://github.com/Fylipp/placeholder.js&quot; class=&quot;collection-item&quot;&gt;placeholder.js&lt;/a&gt;
+    &lt;a href=&quot;https://github.com/Fylipp&quot; class=&quot;collection-item&quot;&gt;Fylipp&lt;/a&gt;
+    &lt;a href=&quot;https://github.com/&quot; class=&quot;collection-item&quot;&gt;GitHub&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p id=&quot;placeholder&quot;&gt;There are no elements in this list&lt;/p&gt;</code></pre>
+    </div>
+</div>
+
+
+<footer class="page-footer light-blue darken-3">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">placeholder.js</h5>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            © 2017 Philipp Ploder
+            <a class="grey-text text-lighten-4 right" href="https://github.com/Fylipp/placeholder.js">GitHub</a>
+        </div>
+    </div>
+</footer>
+</body>
 </html>
