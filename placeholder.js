@@ -21,19 +21,19 @@ var Placeholder = Placeholder || (function () {
         }
     }
 
-    var observer = new MutationObserver(function (mutations, observer) {
-        hasChildrenBranch(mutations[0].target);
-    });
-
-    var observerConfig = {
-        childList: true
-    };
-
-    function hasChildrenBranch(element) {
+    function hasChildrenBranch(element, hooks) {
         if (hasChildren(element)) {
             onParent(element);
+
+            if (hooks && hooks.onParent) {
+                hooks.onParent(element);
+            }
         } else {
             onChildless(element);
+
+            if (hooks && hooks.onChildless) {
+                hooks.onChildless(element);
+            }
         }
     }
 
@@ -55,9 +55,14 @@ var Placeholder = Placeholder || (function () {
             document.querySelectorAll('*[data-placeholderjs-after], *[data-placeholderjs-before], *[data-placeholderjs-placeholder-id]').forEach(self.register);
         },
 
-        register: function (element) {
-            observer.observe(element, observerConfig);
-            hasChildrenBranch(element);
+        register: function (element, hooks) {
+            new MutationObserver(function (mutations, observer) {
+                hasChildrenBranch(mutations[0].target, hooks);
+            }).observe(element, {
+                childList: true
+            });
+
+            hasChildrenBranch(element, hooks);
         }
     };
 
