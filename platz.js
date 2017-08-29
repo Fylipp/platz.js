@@ -1,23 +1,23 @@
-var Placeholder = Placeholder || (function () {
+var Platz = Platz || (function () {
     function onChildless(element) {
-        element.classList.add('placeholderjs-childless');
+        element.classList.add('platz-childless');
 
-        var placeholder = document.getElementById(element.getAttribute('data-placeholderjs-placeholder-id'));
+        var placeholder = document.getElementById(element.getAttribute('data-platz-placeholder-id'));
 
         if (placeholder !== null) {
-            placeholder.classList.remove('placeholderjs-sleep');
-            element.classList.add('placeholderjs-childless-with-placeholder');
+            placeholder.classList.remove('platz-sleep');
+            element.classList.add('platz-childless-with-placeholder');
         }
     }
 
     function onParent(element) {
-        element.classList.remove('placeholderjs-childless');
-        element.classList.remove('placeholderjs-childless-with-placeholder');
+        element.classList.remove('platz-childless');
+        element.classList.remove('platz-childless-with-placeholder');
 
-        var placeholder = document.getElementById(element.getAttribute('data-placeholderjs-placeholder-id'));
+        var placeholder = document.getElementById(element.getAttribute('data-platz-placeholder-id'));
 
         if (placeholder !== null) {
-            placeholder.classList.add('placeholderjs-sleep');
+            placeholder.classList.add('platz-sleep');
         }
     }
 
@@ -52,7 +52,7 @@ var Placeholder = Placeholder || (function () {
 
     var self = {
         init: function () {
-            document.querySelectorAll('*[data-placeholderjs-after], *[data-placeholderjs-before], *[data-placeholderjs-placeholder-id]').forEach(self.register);
+            document.querySelectorAll('*[data-platz-after], *[data-platz-before], *[data-platz-placeholder-id]').forEach(self.register);
         },
 
         register: function (element, hooks) {

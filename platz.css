@@ -1,0 +1,15 @@
+.platz-childless[data-platz-after]::after {
+    content: attr(data-platz-after);
+}
+
+.platz-childless[data-platz-before]::before {
+    content: attr(data-platz-before);
+}
+
+.platz-childless-with-placeholder {
+    display: none;
+}
+
+.platz-sleep {
+    display: none;
+}
