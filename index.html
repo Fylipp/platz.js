@@ -1,26 +1,115 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>placeholder.js</title>
+    <title>platz.js</title>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-    <link rel="stylesheet" href="placeholder.min.css">
+    <link rel="stylesheet" href="materialize-collection-actions-1.0.0.min.css">
+    <link rel="stylesheet" href="platz-2.0.0.min.css">
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script src="placeholder.min.js"></script>
+    <script src="materialize-collection-actions-1.0.0.min.js"></script>
+    <script src="platz-2.0.0.min.js"></script>
 
     <script>
         hljs.initHighlightingOnLoad();
 
         $(document).ready(function () {
-            placeholderjs_init();
+            Platz.init();
+
+            MaterializeCollectionActions.configureActions($('#example-simple-list, #example-simple-styling-list, #example-adv-list, #example-hooks-list'), [
+                {
+                    name: 'clear',
+                    callback: function (collectionItem, collection) {
+                        $(collectionItem).remove();
+                    }
+                }
+            ]);
+
+            $('#example-simple-list-add').click(function () {
+                $('#example-simple-list').append(
+                    $('<a></a>')
+                        .text('Foo')
+                        .addClass('collection-item')
+                        .attr('href', 'javascript:void(0);')
+                );
+            });
+
+            $('#example-simple-table-noheader-add').click(function () {
+                var row = $('<tr></tr>');
+
+                row
+                    .append($('<td></td>').text('Foo'))
+                    .append($('<td></td>').text('Bar'))
+                    .append($('<td></td>').text('Baz'))
+                    .append($('<td></td>').append(
+                        $('<a></a>')
+                            .attr('href', 'javascript:void(0);')
+                            .append($('<i></i>').text('clear').addClass('material-icons'))
+                            .click(function () { row.remove(); })
+                    ));
+
+                $('#example-simple-table-noheader').append(row);
+            });
+
+            $('#example-simple-table-header-add').click(function () {
+                var row = $('<tr></tr>');
+
+                row
+                    .append($('<td></td>').text('Foo'))
+                    .append($('<td></td>').text('Bar'))
+                    .append($('<td></td>').text('Baz'))
+                    .append($('<td></td>').append(
+                        $('<a></a>')
+                            .attr('href', 'javascript:void(0);')
+                            .append($('<i></i>').text('clear').addClass('material-icons'))
+                            .click(function () { row.remove(); })
+                    ));
+
+                $('#example-simple-list-add, #example-simple-table-header').find('tbody').append(row);
+            });
+
+            $('#example-simple-styling-list-add').click(function () {
+                $('#example-simple-styling-list').append(
+                    $('<a></a>')
+                        .text('Foo')
+                        .addClass('collection-item')
+                        .attr('href', 'javascript:void(0);')
+                );
+            });
+
+            $('#example-adv-list-add').click(function () {
+                $('#example-adv-list').append(
+                    $('<a></a>')
+                        .text('Foo')
+                        .addClass('collection-item')
+                        .attr('href', 'javascript:void(0);')
+                );
+            });
+
+            $('#example-hooks-list-add').click(function () {
+                $('#example-hooks-list').append(
+                    $('<a></a>')
+                        .text('Foo')
+                        .addClass('collection-item')
+                        .attr('href', 'javascript:void(0);')
+                );
+            });
+
+            $('#example-simple-list-add, #example-simple-table-noheader-add, #example-simple-table-header-add, #example-simple-styling-list-add, #example-adv-list-add, #example-hooks-list-add').click();
+
+            Platz.register(document.getElementById('example-hooks-list'), {
+                onChildless: function() { console.log('The list has no children'); },
+                onParent: function() { console.log('The list is a parent'); }
+            });
 
             var header = $('header');
 
@@ -56,220 +145,305 @@
             filter: brightness(400%);
         }
 
+        .important {
+            padding: 10px;
+            background-color: #ef5350;
+            border-radius: 5px;
+        }
+
+        .info {
+            padding: 10px;
+            background-color: #ffeb3b;
+            border-radius: 5px;
+        }
+
         .big-arrow {
             font-size: 12em;
 
             text-align: center;
             display: block;
+
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            cursor: default;
+        }
+
+        [data-platz-for="example-simple-styling-list"] {
+            font-size: 2em;
+            color: #2196F3;
+        }
+
+        #example-adv-list-placeholder {
+            width: 10em;
+            height: 10em;
+
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
 
 <body>
-<header>
-    <div class="row z-depth-3 light-blue darken-3">
-        <div class="col s12 m8 offset-m2">
-            <div class="left">
-                <h1 class="white-text">placeholder.js</h1>
-                <p class="white-text">Painless placeholders for lists and list-like elements</p>
+    <header>
+        <div class="row z-depth-3 light-blue darken-3">
+            <div class="col s12 m8 offset-m2">
+                <div class="left">
+                    <h1 class="white-text">platz.js</h1>
+                    <p class="white-text">Painless placeholders for list-like elements and tables</p>
+                </div>
+                <div class="col s12 hide-on-large-only center">
+                    <a href="https://github.com/Fylipp/platz.js" class="btn">View on GitHub</a>
+                </div>
+                <h1 class="right hide-on-med-and-down">
+                    <a href="https://github.com/Fylipp/platz.js"><img src="gh-mark.png" id="gh-mark"></a>
+                </h1>
             </div>
-            <div class="col s12 hide-on-large-only center">
-                <a href="https://github.com/Fylipp/placeholder.js" class="btn">View on GitHub</a>
-            </div>
-            <h1 class="right hide-on-med-and-down">
-                <a href="https://github.com/Fylipp/placeholder.js"><img src="gh-mark.png" id="gh-mark"></a>
-            </h1>
         </div>
-    </div>
-</header>
+    </header>
 
-<main>
-    <div class="row">
-        <div class="col s12 m8 offset-m2">
-            <div id="section-installation" class="section scrollspy">
-                <h1>Installation</h1>
-                <p>
-                    Getting placeholder.js is very simple.
-                    <a href="https://github.com/Fylipp/placeholder.js/releases">Download the latest build</a> and link
-                    the minified files in your HTML file's head section.
-                </p>
+    <main>
+        <div class="row">
+            <div class="col s12 m8 offset-m2">
+                <div id="section-installation" class="section scrollspy">
+                    <h1>Installation</h1>
+                    <p>
+                        <a href="https://github.com/Fylipp/platz.js/releases">Download the latest build</a> and link the
+                        minified files in your HTML file's head section.
+                    </p>
 
-                <pre><code class="html">&lt;link rel=&quot;stylesheet&quot; href=&quot;placeholder-VERSION.min.css&quot;&gt;
-&lt;script src=&quot;placeholder-VERSION.min.js&quot;&gt;&lt;/script&gt;</code></pre>
-            </div>
-
-            <div id="section-usage" class="section scrollspy">
-                <h1>Usage</h1>
-
-                <p>
-                    In order to use placeholder.js all lists and list-like elements that should receive placeholder.js
-                    functionality have to be registered. This can be done with <code>placeholderjs_init()</code>
-                    which automatically finds all elements in the DOM that use placeholder.js attributes. Below you can
-                    see how to use this function in your code. Note that calling this function multiple times can have
-                    unwanted
-                    side effects.
-                </p>
-                <div class="row">
-                    <div class="col s12 m6">
-                        <h4>With jQuery</h4>
-                        <pre><code class="javascript">$(document).ready(function () {
-    placeholderjs_init();
-});</code></pre>
-                    </div>
-
-                    <div class="col s12 m6">
-                        <h4>Without jQuery</h4>
-                        <pre><code class="javascript">window.onload = function () {
-    placeholderjs_init();
-};</code></pre>
-                    </div>
+                    <pre><code class="html">&lt;link rel=&quot;stylesheet&quot; href=&quot;platz-VERSION.min.css&quot;&gt;
+&lt;script src=&quot;platz-VERSION.min.js&quot;&gt;&lt;/script&gt;</code></pre>
                 </div>
 
-                <p>
-                    If lists and list-like elements are added on-the-fly you must call
-                    <code class="javascript">placeholderjs_register(newList)</code>. Below you can see how to use this
-                    function.
-                    Note that the jQuery also works for selectors that match multiple elements.
-                </p>
-                <div class="row">
-                    <div class="col s12 m6">
-                        <h4>With jQuery</h4>
-                        <pre><code class="javascript">var element = $('#my-list');
-element.each(function() {
-    placeholderjs_register(this);
-});</code></pre>
-                    </div>
+                <div id="section-usage" class="section scrollspy">
+                    <h1>Usage</h1>
 
-                    <div class="col s12 m6">
-                        <h4>Without jQuery</h4>
-                        <pre><code class="javascript">var element = document.getElementById('my-list');
-placeholderjs_register(element);</code></pre>
-                    </div>
-                </div>
-            </div>
+                    <p>
+                        All elements that should receive platz.js functionality have to be registered. This can either be done with
+                        <code>Platz.init()</code> which automatically finds all elements in the DOM that use platz.js attributes
+                        or with <code>Platz.register(element)</code> which will register a single element and can provide
+                        hooks for custom behaviour as explained in the <a href="#section-hooks">hooks section</a>.
+                    </p>
 
-            <div id="section-placeholder-after-before" class="section scrollspy">
-                <h1>Primitive Placeholder</h1>
-                <p>
-                    This is the simplest placeholder. It is displayed as text in the content of the <code>::after</code>
-                    or <code>::before</code> element.
-                </p>
-
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">Web Technologies</span>
-                        <ul class="browser-default" data-placeholderjs-after="The list is empty">
-                            <li>HTML</li>
-                            <li>CSS</li>
-                            <li>JavaScript</li>
-                        </ul>
-                    </div>
+                    <p class="important">
+                        <b>IMPORTANT:</b> Registering targets more than once is undefined behaviour.
+                    </p>
                 </div>
 
-                <i class="material-icons big-arrow">arrow_downward</i>
+                <div id="section-placeholder-after-before" class="section scrollspy">
+                    <h1>Simple Placeholder</h1>
+                    <p>
+                        This is the basic placeholder. It visually replaces the target with the text specified in the <code>data-platz</code> attribute.
+                        Below you can see a list and a table that demonstrate this functionality. You can remove
+                        and add elements with the buttons.
+                    </p>
 
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">Web Technologies</span>
-                        <ul data-placeholderjs-after="The list is empty">
-
-                        </ul>
-                    </div>
-                </div>
-
-                <h4>Source</h4>
-                <p>
-                    Below <code>::after</code> is used. In order to have the placeholder in <code>::before</code> you
-                    simply
-                    have to use <code>data-placeholderjs-before</code>.
-                </p>
-
-                <pre><code class="html">&lt;ul data-placeholderjs-after=&quot;The list is empty&quot;&gt;
-    &lt;li&gt;HTML&lt;/li&gt;
-    &lt;li&gt;CSS&lt;/li&gt;
-    &lt;li&gt;JavaScript&lt;/li&gt;
-&lt;/ul&gt;</code></pre>
-            </div>
-
-            <div id="section-placeholder-element" class="section scrollspy">
-                <h1>Advanced Placeholder</h1>
-                <p>
-                    Sometimes a placeholder element should visually replace the list. Below you can see this feature
-                    being used with <a href="http://materializecss.com/collections.html">MaterializeCSS colllections</a>.
-                    Had the element not been replaced the list border would be visible. Any HTML
-                    element can be used as a placeholder this way.
-                </p>
-
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">Important Links</span>
-                        <div class="collection" data-placeholderjs-placeholder-id="demo_placeholder1">
-                            <a href="https://github.com/Fylipp/placeholder.js"
-                               class="collection-item">placeholder.js</a>
-                            <a href="https://github.com/Fylipp" class="collection-item">Fylipp</a>
-                            <a href="https://github.com/" class="collection-item">GitHub</a>
+                    <h4>List</h4>
+                    <div class="card">
+                        <div class="card-content">
+                            <div id="example-simple-list" class="collection mca-always-visible" data-platz="The list is empty">
+                            </div>
+                            <a id="example-simple-list-add" class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">add</i></a>
                         </div>
-
-                        <p id="demo_placeholder1">Placeholder replace</p>
                     </div>
-                </div>
+                    <pre><code class="html">&lt;div class=&quot;collection&quot; data-platz=&quot;The list is empty&quot;&gt;
+    ...
+&lt;/div&gt;</code></pre>
 
-                <i class="material-icons big-arrow">arrow_downward</i>
-
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">Important Links</span>
-                        <div class="collection" data-placeholderjs-placeholder-id="demo_placeholder2">
-
-                        </div>
-
-                        <p id="demo_placeholder2">There are no elements in this list</p>
-                    </div>
-                </div>
-
-                <h4>Source</h4>
                 <p>
-                    The <code>data-placeholderjs-placeholder-id</code> attribute contains the id of the element to use
-                    as a placeholder.
+                    When dealing with tables there is more to consider. A table is either split into <code>thead</code> and <code>tbody</code> or
+                    the rows (<code>tr</code>) can be direct sub-elements of the table. When the later is the case any row containing no
+                    data columns (<code>td</code>) will be considered empty. If the header should not be hidden when the placeholder is shown
+                    then the table <b>has</b> to be split into <code>thead</code> and <code>tbody</code>.
                 </p>
 
-                <pre><code class="html">&lt;div class=&quot;collection&quot; data-placeholderjs-placeholder-id=&quot;placeholder&quot;&gt;
-    &lt;a href=&quot;https://github.com/Fylipp/placeholder.js&quot; class=&quot;collection-item&quot;&gt;placeholder.js&lt;/a&gt;
-    &lt;a href=&quot;https://github.com/Fylipp&quot; class=&quot;collection-item&quot;&gt;Fylipp&lt;/a&gt;
-    &lt;a href=&quot;https://github.com/&quot; class=&quot;collection-item&quot;&gt;GitHub&lt;/a&gt;
+                <div>
+                    <div class="row">
+                        <h4>Table without header</h4>
+                        <p>When a table has no explicit header (no <code>thead</code>) then the header will be hidden when the placeholder is displayed.</p>
+                        <div class="col s12 m6">
+                            <div class="card">
+                                <div class="card-content">
+                                    <table id="example-simple-table-noheader" data-platz="The table is empty">
+                                        <tr>
+                                            <th>Foo</th>
+                                            <th>Bar</th>
+                                            <th>Baz</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </table>
+                                    <a id="example-simple-table-noheader-add" class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">add</i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s12 m6">
+                            <pre><code class="html">&lt;table data-platz=&quot;The table is empty&quot;&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Foo&lt;/th&gt;
+        &lt;th&gt;Bar&lt;/th&gt;
+        &lt;th&gt;Baz&lt;/th&gt;
+        &lt;th&gt;Action&lt;/th&gt;
+    &lt;/tr&gt;
+    
+    ...
+&lt;/table&gt;</code></pre>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <h4>Table with header</h4>
+                            <p>When a table has an explicit header (<code>thead</code>) then the header will not be hidden when the placeholder is displayed.</p>
+                            <div class="col s12 m6">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <table id="example-simple-table-header" data-platz="The table is empty">
+                                            <thead>
+                                                <tr>
+                                                    <th>Foo</th>
+                                                    <th>Bar</th>
+                                                    <th>Baz</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                        <a id="example-simple-table-header-add" class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">add</i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 m6">
+                                <pre><code class="html">&lt;table data-platz=&quot;The table is empty&quot;&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Foo&lt;/th&gt;
+            &lt;th&gt;Bar&lt;/th&gt;
+            &lt;th&gt;Baz&lt;/th&gt;
+            &lt;th&gt;Action&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        ...
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <h4>Styling</h4>
+                    <p>
+                        The automatically generated placeholder is a <code>span</code> element and sometimes this placeholder should be addressable
+                        by CSS. To make this possible the target element needs an <code>id</code> attribute. The generated placeholder will then
+                        receive a <code>data-platz-for</code> attribute containg the target <code>id</code>. Below you can see an example of how
+                        this could be used.
+                    </p>
+                    <div class="card">
+                        <div class="card-content">
+                            <div id="example-simple-styling-list" class="collection" data-platz="The list is empty">
+                            </div>
+                            <a id="example-simple-styling-list-add" class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">add</i></a>
+                        </div>
+                    </div>
+                    <pre><code class="html">&lt;div id=&quot;list&quot; class=&quot;collection&quot; data-platz=&quot;The list is empty&quot;&gt;
+    ...
+&lt;/div&gt;</code></pre>
+                    <pre><code class="css">[data-platz-for="list"] {
+    font-size: 2em;
+    color: #2196F3;
+}</code></pre>
+                </div>
+
+                <div id="section-placeholder-element" class="section scrollspy">
+                    <h1>Advanced Placeholder</h1>
+                    <p>
+                        While simple placeholders can only specify text advanced placeholders can be used to use entire elements.
+                        The <code>data-platz-id</code> attribute contains the <code>id</code> of the element to use as a placeholder.
+                    </p>
+
+                    <div class="card">
+                        <div class="card-content">
+                            <div id="example-adv-list" class="collection mca-always-visible" data-platz-id="example-adv-list-placeholder">
+                            </div>
+
+                            <img id="example-adv-list-placeholder" src="https://github.com/Fylipp.png" alt="Placeholder image">
+                        </div>
+                        <a id="example-adv-list-add" class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">add</i></a>
+                    </div>
+
+                    <pre><code class="html">&lt;div class=&quot;collection&quot; data-platz-id=&quot;placeholder&quot;&gt;
+    ...
 &lt;/div&gt;
 
-&lt;p id=&quot;placeholder&quot;&gt;There are no elements in this list&lt;/p&gt;</code></pre>
-            </div>
-        </div>
+&lt;img id=&quot;placeholder&quot; src=&quot;https://github.com/Fylipp.png&quot; alt=&quot;Placeholder image&quot;&gt;</code></pre>
+                </div>
 
-        <div class="col hide-on-small-only m2">
-            <div class="toc-wrapper">
-                <ul class="section table-of-contents">
-                    <li><a href="#section-installation">Installation</a></li>
-                    <li><a href="#section-usage">Usage</a></li>
-                    <li><a href="#section-placeholder-after-before">Primitive Placeholder</a></li>
-                    <li><a href="#section-placeholder-element">Advanced Placeholder</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</main>
+                <div id="section-hooks" class="section scrollspy">
+                    <h1>Hooks</h1>
+                    <p>
+                        Hooks can notify you when certain things hapen. The supported hooks are <code>onChildless</code> 
+                        and <code>onParent</code> and the target is always passed as the only argument.
+                    </p>
+                    <pre><code class="js">Platz.register(element, {
+    onChildless: function (element) { ... },
+    onParent: function (element) { ... },
+});</code></pre>
 
-<footer class="page-footer light-blue darken-3">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">placeholder.js</h5>
+                    <p>
+                        Below you can see an example that uses hooks to create console messages. Note that <code>data-platz-no-implicit</code> attribute
+                        is required in order to exclude the list from the <code>Platz.init</code> function's scope so that it can be
+                        registered explicitly with <code>Platz.register</code>.
+                    </p>
+                    <div class="card">
+                        <div class="card-content">
+                            <div id="example-hooks-list" class="collection mca-always-visible" data-platz="The list is empty" data-platz-no-impl>
+                            </div>
+                            <a id="example-hooks-list-add" class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">add</i></a>
+                        </div>
+                    </div>
+                            <pre><code class="html">&lt;div class=&quot;collection&quot; data-platz=&quot;The list is empty&quot; data-platz-no-implicit&gt;
+    ...
+&lt;/div&gt;</code></pre>
+
+                        <pre><code class="js">Platz.register(document.getElementById('example-hooks-list'), {
+    onChildless: function() { console.log('The list has no children'); },
+    onParent: function() { console.log('The list is a parent'); }
+});</code></pre>
+                </div>
+            </div>
+
+            <div class="col hide-on-small-only m2">
+                <div class="toc-wrapper">
+                    <ul class="section table-of-contents">
+                        <li><a href="#section-installation">Installation</a></li>
+                        <li><a href="#section-usage">Usage</a></li>
+                        <li><a href="#section-placeholder-after-before">Simple Placeholder</a></li>
+                        <li><a href="#section-placeholder-element">Advanced Placeholder</a></li>
+                        <li><a href="#section-hooks">Hooks</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="footer-copyright">
+    </main>
+
+    <footer class="page-footer light-blue darken-3">
         <div class="container">
-            © 2017 Philipp Ploder
-            <a class="grey-text text-lighten-4 right" href="https://github.com/Fylipp/placeholder.js">GitHub</a>
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">platz.js</h5>
+                </div>
+            </div>
         </div>
-    </div>
-</footer>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2017 Philipp Ploder
+                <a class="grey-text text-lighten-4 right" href="https://github.com/Fylipp/platz.js">GitHub</a>
+            </div>
+        </div>
+    </footer>
 </body>
+
 </html>
