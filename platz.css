@@ -3,10 +3,6 @@
  * that may or may not contain a custom value for <display> which would mess with the hiding process.
  */
 
-.platz-hidden-childless {
-    display: none !important;
-}
-
-.platz-hidden-placeholder {
+.platz-hidden-childless, .platz-hidden-placeholder {
     display: none !important;
 }
