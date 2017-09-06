@@ -1,7 +1,13 @@
 # platz.js
-Easy placeholders for lists and list-like elements.
+Easy placeholders for list-like elements and tables.
 
-For the official documentation [go here](https://fylipp.github.io/platz.js/).
+## Requirements
 
-# License
-MIT. See the `LICENSE` file for the complete license.
+None.
+
+## Documentation
+
+The documentation and the live examples are available [on the GitHub pages site](https://fylipp.github.io/platz.js/).
+
+## License
+MIT. You can find the license in the `LICENSE` file.
